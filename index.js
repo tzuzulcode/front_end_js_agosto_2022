@@ -4,6 +4,7 @@ const h1Bienvenida = document.getElementById("bienvenida")
 const listElements = document.getElementsByClassName("list-element") //HTMLCollection
 const element = document.querySelector("#parrafo") // Obtiene solo un elemento
 const nodeList = document.querySelectorAll(".list-element") // Obtiene varios elementos
+const list = document.getElementById("list")
 
 // for (let i = 0; i < listElements.length; i++) {
 //     listElements[i].onclick = function(){
@@ -11,17 +12,18 @@ const nodeList = document.querySelectorAll(".list-element") // Obtiene varios el
 //     }
 // }
 
-nodeList.forEach(function(element){
-    element.onclick = function(){
-        alert("Click")
-    }
-})
+// nodeList.forEach(function(element){
+//     element.onclick = function(){
+//         alert("Click")
+//     }
+// })
 
-nodeList.forEach((element)=>{
-    element.onclick = ()=>{
-        alert("Click")
-    }
-})
+// nodeList.forEach((element)=>{
+//     element.onclick = (event)=>{
+//         console.log(event)
+//         alert("Click")
+//     }
+// })
 
 
 
@@ -30,4 +32,20 @@ console.log(listElements)
 console.log(element)
 console.log(nodeList)
 
-// Reto: 5 eventos comúnes de JS
+list.onclick = (event)=>{
+    console.log(event)
+}
+
+// Reto: 5 eventos comúnes de JS en el navegador
+//blur
+//change
+//input
+//focus
+//keyPressed
+//mouseMove
+//load
+//mouseOver
+//onDrag
+//onDrop
+//submit
+//resize
