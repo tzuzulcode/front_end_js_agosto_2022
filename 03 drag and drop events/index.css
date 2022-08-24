@@ -1,0 +1,12 @@
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#dragElements{
+    border: 3px solid #717ec3;
+}
+
+#dropZone{
+    border: 3px solid #ee8434;
+}
