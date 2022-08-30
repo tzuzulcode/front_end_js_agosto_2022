@@ -20,10 +20,37 @@
 
 // console.log("Hola")
 
+const characters = document.getElementById("characters")
 
+const createCard = (character)=>{
+    const article = document.createElement("article")
+    const p = document.createElement("p")
+    p.innerText = character.name
+    const img = document.createElement("img")
+    img.src = character.image
+    article.appendChild(p) // al "article" agregale un child que es el "p"
+    article.appendChild(img) // al "article" agregale un child que es el "img"
+    characters.appendChild(article)
+}
+
+
+// Gestionando promesas
 fetch("https://rickandmortyapi.com/api/character") // fetch -> ve y traéme algo
 .then((response)=>{
-    console.log(response)
+    return response.json() // Convierte el body de la respuesta en json. También devuelve una promesa
 })
+.then((body)=>{
+    console.log("Body",body)
+    const characters = body.results
 
-// Stream ...
+    characters.forEach(character => {
+        createCard(character)
+    });
+
+})// Caso exitoso
+.catch((error)=>{
+    // URL o recurso no disponible, Error del servidor, Conversión incorrecta
+    console.log("Error",error)
+})//caso fallido
+
+// Investigar acerca del async/await - Agregarle estilos
