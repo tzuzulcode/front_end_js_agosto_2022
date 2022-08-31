@@ -37,7 +37,12 @@ const createCard = (character)=>{
 // Gestionando promesas
 fetch("https://rickandmortyapi.com/api/character") // fetch -> ve y traéme algo
 .then((response)=>{
-    return response.json() // Convierte el body de la respuesta en json. También devuelve una promesa
+    if(response.ok){
+        return response.json() // Convierte el body de la respuesta en json. También devuelve una promesa
+    }else{
+        // console.error(data)
+        throw Error("Ocurrió un error")
+    }
 })
 .then((body)=>{
     console.log("Body",body)
@@ -50,7 +55,5 @@ fetch("https://rickandmortyapi.com/api/character") // fetch -> ve y traéme algo
 })// Caso exitoso
 .catch((error)=>{
     // URL o recurso no disponible, Error del servidor, Conversión incorrecta
-    console.log("Error",error)
+    console.log("Error:",error.message)
 })//caso fallido
-
-// Investigar acerca del async/await - Agregarle estilos
