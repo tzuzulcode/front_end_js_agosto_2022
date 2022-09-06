@@ -4,42 +4,79 @@ let targetElement
 let characters
 // let draggingIndex
 
+const reOrderArray = (index1,index2) =>{
+    if(Math.abs(index1-index2)===1){
+        const character1 = characters[index1]
+        const character2 = characters[index2]
+        
+        // Intercambio de información
+        characters[index1] = character2
+        characters[index2] = character1
+
+        // Otra forma:
+        // const [character2,character1] = [characters[index1],characters[index2]]
+
+        // characters[index1] = character2
+        // characters[index2] = character1
+
+        return [...characters]
+    }else if(index1>index2){
+        // Moviento hacia adelante
+        const leftSide = characters.slice(0,index2)
+        const centralSide = characters.slice(index2,index1)
+        const rightSide = characters.slice(index1+1)
+
+        const reordered = [...leftSide,characters[index1],...centralSide,...rightSide]
+
+        return reordered
+    }else if(index2>index1){
+        // Movimiento hacia atrás
+        const leftSide = characters.slice(0,index1)
+        const centralSide = characters.slice(index1+1,index2+1)
+        const rightSide = characters.slice(index2+1)
+
+        const reordered = [...leftSide,...centralSide,characters[index1],...rightSide]
+
+        console.log(reordered)
+
+        return reordered
+    }else{
+        return characters
+    }
+}
+
 const addEvents = (article)=>{
-    article.ondrag=()=>{
+    article.ondrag =()=>{
         draggingElement = article
+        if(draggingElement.parentNode===app){
+            app.removeChild(draggingElement)
+        }
         // draggingIndex = index
     }
 
     article.ondragover = (event)=>{
         event.preventDefault()
-        targetElement = event.target
+        targetElement = article
+        // targetElement.after(draggingElement)
+        // Reto: Corregir el comportamiento cuando se usa -> targetElement.before(draggingElement)
     }
 
     article.ondrop = ()=>{
         let draggingIndex = parseInt(draggingElement.dataset.index)
         let targetIndex = parseInt(targetElement.dataset.index)
 
-        console.log(draggingIndex)
-        console.log(targetIndex)
+        let reordered = reOrderArray(draggingIndex,targetIndex)
 
-        // const array = []
-
-        let beginningToDragging = characters.slice(0,draggingIndex)
-        let draggingToTarget = characters.slice(draggingIndex+1,targetIndex)
-        let targetToEnd = characters.slice(targetIndex)
-
-        draggingToTarget.push(characters[draggingIndex])
-        console.log(beginningToDragging)
-        console.log(draggingToTarget)
-        console.log(targetToEnd)
-        // let left = array.slice()
-
-        const reordered = beginningToDragging.concat(draggingToTarget).concat(targetToEnd)
-        
-        app.innerHTML = ""
-        reordered.forEach((character,index) => {
-            createCard(character,index)
-        });
+        if(reordered!==characters){
+            characters = reordered
+            app.innerHTML = ""
+            characters.forEach((character,index) => {
+                createCard(character,index)
+            });
+            console.log("Rendered")
+        }else{
+            console.log("Not rendered")
+        }
     }
 }
 
